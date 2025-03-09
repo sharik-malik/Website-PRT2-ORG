@@ -1,31 +1,22 @@
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adres-deployment
-  namespace: default
+  name: your-app-name
   labels:
-    app: adres
+    app: your-app
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
-      app: adres
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
+      app: your-app
   template:
     metadata:
       labels:
-        app: adres
+        app: your-app
     spec:
-      tolerations:
-      - key: "node-role.kubernetes.io/control-plane"
-        operator: "Exists"
-        effect: "NoSchedule"
       containers:
-      - name: adres
+      - name: your-app-container
         image: sharikm/prt:latest
-        imagePullPolicy: Always
         ports:
         - containerPort: 80
+
