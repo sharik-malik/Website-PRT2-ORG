@@ -1,0 +1,31 @@
+kind: Deployment
+metadata:
+  name: adres-deployment
+  namespace: default
+  labels:
+    app: adres
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: adres
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: adres
+    spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+      containers:
+      - name: adres
+        image: sharikm/prt:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
